@@ -27,7 +27,7 @@ To get started with SnapShatter, you need to have the following:
 1. Clone this repository to your local machine:
 
     ```shell
-    git clone https://github.com/your-username/SnapShatter.git
+    git clone https://github.com/KyTDK/SnapShatter.git
     ```
 
 2. Navigate to the project directory:
