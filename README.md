@@ -61,6 +61,8 @@ Feel free to explore the `main.py` file for more options and details on how to u
 
 - SnapShatter is an open-source project and is provided "as is" without any warranties or guarantees. Use it at your own risk.
 
+- **This tool is designed for a black picture only, meaning it won't recognize certain buttons if the camera sees anything else**
+
 ## Contribution
 
 If you're interested in contributing to SnapShatter, feel free to open issues or submit pull requests on the [GitHub repository](https://github.com/KyTDK/SnapShatter).
