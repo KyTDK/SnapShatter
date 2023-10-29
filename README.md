@@ -1,6 +1,6 @@
 # SnapShatter - Automate Your Snapchat Experience
 
-SnapShatter is a Python-based automation tool that simplifies and enhances your Snapchat experience. With SnapShatter, you can effortlessly send snaps, maintain streaks, and add friends, all in an automated and efficient manner. No more manual sending or managing friends one by one; SnapShatter has got you covered.
+SnapShatter is a Python-based automation tool that simplifies and enhances your Snapchat experience. With SnapShatter, you can effortlessly send snaps, maintain streaks, add friends, and even calibrate scales using the "calibrate scale" option, all in an automated and efficient manner. No more manual sending or managing friends one by one; SnapShatter has got you covered.
 
 ## Features
 
@@ -12,7 +12,11 @@ SnapShatter offers a range of powerful features to enhance your Snapchat experie
 
 - **Add Friends:** Quickly add new friends to your Snapchat account.
 
+- **Calibrate Scales:** You can also use SnapShatter to calibrate scales, making it a versatile tool for various tasks.
+
 - **Easy to Use:** SnapShatter is designed with simplicity in mind. You don't need to be a tech expert to use it.
+
+**Note:** While the "calibrate scale" option is available, in the current version, you may need to update the code manually to use this feature. A more user-friendly way to calibrate scales will be found in future updates.
 
 ## Prerequisites
 
