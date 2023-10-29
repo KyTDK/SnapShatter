@@ -60,7 +60,7 @@ def calibrate_scale(image_name):
 def send_snaps():
     try:
         while True:
-            while find_image("sending.png", click=False, failsafe=False, scale=1.366):
+            while find_image("sending.png", click=False, failsafe=False):
                 print("Still sending, waiting...")
                 time.sleep(5)
             while not find_image(
@@ -70,13 +70,11 @@ def send_snaps():
                 failsafe=False,
             ) and find_image("send.png", failsafe=False, click=False):
                 print("Still processing, waiting")
-            if not find_image(
-                "multi_snap_selected.png", click=False, failsafe=False, scale=1.373
-            ):
+            if not find_image("multi_snap_selected.png", click=False, failsafe=False):
                 print("Multi-snap not enabled, enabling now...")
                 find_image("more.png")
                 time.sleep(1)
-                result = find_image("director_mode.png", click=False, scale=1.365)
+                result = find_image("director_mode.png", click=False)
                 if result:
                     x, y = result
                 else:
@@ -84,14 +82,13 @@ def send_snaps():
                 device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
                 device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
                 device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
-                if find_image("multi_snap.png", scale=1.362):
+                if find_image("multi_snap.png"):
                     print("Multi-snap enabled!")
             if not find_image(
                 "edit_and_send.png",
                 failsafe=False,
                 roi_height_percentage=30,
                 roi_top_percentage=70,
-                scale=1.363,
             ):
                 find_image("snap.png", click_times=7)
                 time.sleep(1)
@@ -107,7 +104,6 @@ def send_snaps():
                 "select_all.png",
                 roi_height_percentage=30,
                 roi_top_percentage=0,
-                scale=1.354,
             )
             time.sleep(1)
             find_image("send.png")
