@@ -2,7 +2,14 @@ import os
 import time
 import cv2
 import traceback
-from src.utils import find_image, get_device, get_device_dimensions, set_default_scale, tap, swipe
+from src.utils import (
+    find_image,
+    get_device,
+    get_device_dimensions,
+    set_default_scale,
+    tap,
+    swipe,
+)
 
 device = get_device()
 
@@ -79,9 +86,9 @@ def send_snaps():
                 result = find_image("director_mode.png", click=False)
                 if result:
                     x, y = result
-                    swipe(x, y, x, y-500, 500)
-                    swipe(x, y, x, y-500, 500)
-                    swipe(x, y, x, y-500, 500)
+                    swipe(x, y, x, y - 500, 500)
+                    swipe(x, y, x, y - 500, 500)
+                    swipe(x, y, x, y - 500, 500)
                 else:
                     # multi-snap full is frequency problem, check
                     if find_image("multi_snap_full.png", click=False, failsafe=False):
@@ -118,15 +125,6 @@ def send_snaps():
         send_snaps()
 
 
-def is_on_message_page():
-    frontpage_elements = ["camera_person.png", "snap_reply.png", "new_snap.png"]
-    for element in frontpage_elements:
-        result = find_image(element, failsafe=False, click=False)
-        if result is not False:
-            return True
-        return False
-
-
 def do_streaks():
     scrolls_without_streaks = 0
     height_percentage = 10
@@ -145,10 +143,10 @@ def do_streaks():
                     roi_top_percentage=top_percentage,
                 ):
                     print("Already delivered, moving on...")
-                    swipe(x, y, x, y-200, 100)
+                    swipe(x, y, x, y - 200, 100)
                     continue
                 if find_image("new_snap.png", failsafe=False):
-                    tap(x/2, y/s)
+                    tap(x / 2, y / s)
                 result = find_image(
                     "camera_person.png",
                     failsafe=False,
@@ -190,7 +188,7 @@ def do_streaks():
                 )
                 if result:
                     x, y = result
-                    swipe(x, y, x, y-200, 100)
+                    swipe(x, y, x, y - 200, 100)
                     if not find_image("streak.png", failsafe=False):
                         scrolls_without_streaks += 1
                         if scrolls_without_streaks >= 10:
@@ -213,7 +211,7 @@ def add_friends():
                 result = find_image("message.png", failsafe=False, click=False)
                 if result:
                     x, y = result
-                    swipe(x, y, x, y-200, 100)
+                    swipe(x, y, x, y - 200, 100)
                     if not find_image("add.png", failsafe=False):
                         scrolls_without_adds += 1
                         if scrolls_without_adds >= 10:
