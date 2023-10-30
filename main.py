@@ -2,7 +2,7 @@ import os
 import time
 import cv2
 import traceback
-from src.utils import find_image, get_device, get_device_dimensions
+from src.utils import find_image, get_device, get_device_dimensions, set_default_scale, tap, swipe
 
 device = get_device()
 
@@ -52,7 +52,7 @@ def calibrate_scale(image_name):
             best_scale = scale
 
         # Increase the scale for the next iteration
-        scale += 0.001
+        scale += 0.01
 
     return best_scale, peak_accuracy
 
@@ -70,18 +70,22 @@ def send_snaps():
                 failsafe=False,
             ) and find_image("send.png", failsafe=False, click=False):
                 print("Still processing, waiting")
-            if not find_image("multi_snap_selected.png", click=False, failsafe=False):
+            if not find_image(
+                "multi_snap_selected.png", click=False, failsafe=False
+            ) and find_image("snap.png", click=False, failsafe=False):
                 print("Multi-snap not enabled, enabling now...")
                 find_image("more.png")
                 time.sleep(1)
                 result = find_image("director_mode.png", click=False)
                 if result:
                     x, y = result
+                    swipe(x, y, x, y-500, 500)
+                    swipe(x, y, x, y-500, 500)
+                    swipe(x, y, x, y-500, 500)
                 else:
-                    continue
-                device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
-                device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
-                device.shell(f"input touchscreen swipe {x} {y} {x} {y-500} 500")
+                    # multi-snap full is frequency problem, check
+                    if find_image("multi_snap_full.png", click=False, failsafe=False):
+                        find_image("ok.png")
                 if find_image("multi_snap.png"):
                     print("Multi-snap enabled!")
             if not find_image(
@@ -141,10 +145,10 @@ def do_streaks():
                     roi_top_percentage=top_percentage,
                 ):
                     print("Already delivered, moving on...")
-                    device.shell(f"input touchscreen swipe {x} {y} {x} {y-200} 100")
+                    swipe(x, y, x, y-200, 100)
                     continue
                 if find_image("new_snap.png", failsafe=False):
-                    device.shell(f"input touchscreen swipe {x/2} {y/2} {x/2} {y/2} 50")
+                    tap(x/2, y/s)
                 result = find_image(
                     "camera_person.png",
                     failsafe=False,
@@ -186,7 +190,7 @@ def do_streaks():
                 )
                 if result:
                     x, y = result
-                    device.shell(f"input touchscreen swipe {x} {y} {x} {y-200} 100")
+                    swipe(x, y, x, y-200, 100)
                     if not find_image("streak.png", failsafe=False):
                         scrolls_without_streaks += 1
                         if scrolls_without_streaks >= 10:
@@ -209,7 +213,7 @@ def add_friends():
                 result = find_image("message.png", failsafe=False, click=False)
                 if result:
                     x, y = result
-                    device.shell(f"input touchscreen swipe {x} {y} {x} {y-200} 100")
+                    swipe(x, y, x, y-200, 100)
                     if not find_image("add.png", failsafe=False):
                         scrolls_without_adds += 1
                         if scrolls_without_adds >= 10:
@@ -226,8 +230,22 @@ def add_friends():
 print("1. Send snaps")
 print("2. Add friends")
 print("3. Do streaks")
-print("4. Calibrate scale")
+print("4. Recalibrate scale")
 choice = input("Enter your choice: ")
+scale = None
+# Check if calibrate.txt exists
+if os.path.exists("calibrate.txt"):
+    with open("calibrate.txt", "r") as calibrate_file:
+        scale = calibrate_file.read().strip()
+
+# If calibrate.txt doesn't exist or is empty, call calibrate() and write into calibrate.txt
+if not scale:
+    best_scale, peak_accuracy = calibrate_scale("snap.png")
+    with open("calibrate.txt", "w") as calibrate_file:
+        calibrate_file.write(str(best_scale))
+
+if scale:
+    set_default_scale(scale)
 if choice == "1":
     send_snaps()
 elif choice == "2":
