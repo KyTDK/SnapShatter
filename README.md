@@ -1,6 +1,6 @@
 # SnapShatter - Automate Your Snapchat Experience
 
-SnapShatter is a Python-based automation tool that simplifies and enhances your Snapchat experience. With SnapShatter, you can effortlessly send snaps, maintain streaks, add friends, and even calibrate scales using the "calibrate scale" option, all in an automated and efficient manner. No more manual sending or managing friends one by one; SnapShatter has got you covered.
+SnapShatter is a Python-based automation tool that simplifies and enhances your Snapchat experience. With SnapShatter, you can effortlessly send snaps, maintain streaks, add friends, and calibrate scales, all in an automated and efficient manner. No more manual sending or managing friends one by one; SnapShatter has got you covered.
 
 ## Features
 
@@ -12,11 +12,9 @@ SnapShatter offers a range of powerful features to enhance your Snapchat experie
 
 - **Add Friends:** Quickly add new friends to your Snapchat account.
 
-- **Calibrate Scales:** You can also use SnapShatter to calibrate scales, making it a versatile tool for various tasks.
+- **Calibrate Scales:** SnapShatter allows you to calibrate scales, making it a versatile tool for various tasks.
 
 - **Easy to Use:** SnapShatter is designed with simplicity in mind. You don't need to be a tech expert to use it.
-
-**Note:** While the "calibrate scale" option is available, in the current version, you may need to update the code manually to use this feature. A more user-friendly way to calibrate scales will be found in future updates.
 
 ## Prerequisites
 
@@ -49,10 +47,15 @@ To get started with SnapShatter, you need to have the following:
 ## Usage
 
 SnapShatter is straightforward to use. Here are some basic usage examples:
-```shell
- python main.py
-```
-    
+
+- To start SnapShatter, run the following command:
+
+    ```shell
+    python main.py
+    ```
+
+- Follow the on-screen instructions to utilize its features.
+
 Feel free to explore the `main.py` file for more options and details on how to use each feature.
 
 ## Important Notes
@@ -61,7 +64,7 @@ Feel free to explore the `main.py` file for more options and details on how to u
 
 - SnapShatter is an open-source project and is provided "as is" without any warranties or guarantees. Use it at your own risk.
 
-- **This tool is designed for a black picture only, meaning it won't recognize certain buttons if the camera sees anything else**
+- **This tool is designed for a black picture only, meaning it won't recognize certain buttons if the camera sees anything else.**
 
 ## Contribution
 
@@ -75,6 +78,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 SnapShatter uses the power of Python and the OpenCV library to make your Snapchat experience more convenient. We are grateful to the open-source community for these valuable resources.
 
-Give SnapShatter a try, and enhance your Snapchat experience with automation and ease! If you have any questions or run into issues, please don't hesitate to open an issue on GitHub or contact us.
+Give SnapShatter a try and enhance your Snapchat experience with automation and ease! If you have any questions or run into issues, please don't hesitate to open an issue on GitHub or contact us.
 
 Happy snapping! 📸
