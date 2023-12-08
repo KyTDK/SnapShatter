@@ -36,6 +36,7 @@ def calibrate_scale(image_name):
     # Initial scale and peak accuracy
     scale = 0.1
     peak_accuracy = 0
+    best_scale = 0
 
     while True:
         # Resize the template image
@@ -67,16 +68,11 @@ def calibrate_scale(image_name):
 def send_snaps():
     try:
         while True:
+            time.sleep(5)
             while find_image("sending.png", click=False, failsafe=False):
                 print("Still sending, waiting...")
                 time.sleep(5)
-            while not find_image(
-                "camera.png",
-                roi_height_percentage=30,
-                roi_top_percentage=70,
-                failsafe=False,
-            ) and find_image("send.png", failsafe=False, click=False):
-                print("Still processing, waiting")
+            find_image("camera.png", roi_height_percentage=30, roi_top_percentage=70)
             if not find_image(
                 "multi_snap_selected.png", click=False, failsafe=False
             ) and find_image("snap.png", click=False, failsafe=False):
@@ -107,18 +103,16 @@ def send_snaps():
                     "edit_and_send.png", roi_height_percentage=30, roi_top_percentage=70
                 )
             time.sleep(1)
-            find_image("next.png", roi_height_percentage=30, roi_top_percentage=70)
+            find_image("send_to.png", roi_height_percentage=30, roi_top_percentage=70)
             time.sleep(1)
             find_image("shortcut.png", roi_height_percentage=30, roi_top_percentage=0)
             time.sleep(1)
-            find_image(
-                "select_all.png",
-                roi_height_percentage=30,
-                roi_top_percentage=0,
-            )
+            find_image("select_all.png")
             time.sleep(1)
             find_image("send.png")
             time.sleep(1)
+            while find_image("send.png", failsafe=False, click=False):
+                print("Still processing, waiting")
     except Exception as e:
         print(f"Function a: Caught an exception - {e}")
         traceback.print_exc()
@@ -134,7 +128,7 @@ def do_streaks():
             if result:
                 x, y = result
                 height, width = get_device_dimensions()
-                top_percentage = (y / height) * 100 - 5
+                top_percentage = int((y / height) * 100 - 5)
                 if find_image(
                     "delivered.png",
                     failsafe=False,
@@ -146,7 +140,7 @@ def do_streaks():
                     swipe(x, y, x, y - 200, 100)
                     continue
                 if find_image("new_snap.png", failsafe=False):
-                    tap(x / 2, y / s)
+                    tap(x / 2, y / 2)
                 result = find_image(
                     "camera_person.png",
                     failsafe=False,
