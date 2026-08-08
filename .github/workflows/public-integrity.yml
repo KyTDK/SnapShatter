@@ -1,0 +1,40 @@
+name: Public Integrity
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-integrity:
+    name: public-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out trusted policy
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: policy
+          sparse-checkout: .github/scripts/public-integrity-check.sh
+          sparse-checkout-cone-mode: false
+
+      - name: Check out proposed tree
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: candidate
+          fetch-depth: 0
+
+      - name: Inspect proposed public state
+        env:
+          PUBLIC_INTEGRITY_PATTERN: ${{ secrets.PUBLIC_INTEGRITY_PATTERN }}
+          PUBLIC_INTEGRITY_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUBLIC_INTEGRITY_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PUBLIC_INTEGRITY_METADATA: |
+            ${{ github.event.pull_request.head.ref }}
+            ${{ github.event.pull_request.title }}
+            ${{ github.event.pull_request.body }}
+        run: bash policy/.github/scripts/public-integrity-check.sh candidate
